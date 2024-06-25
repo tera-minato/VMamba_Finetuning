@@ -97,27 +97,21 @@ def build_loader(config):
 
 def build_dataset(is_train, config):
     transform = build_transform(is_train, config)
-    if config.DATA.DATASET == 'imagenet':
-        prefix = 'train' if is_train else 'val'
+    if config.DATA.DATASET == '102flowers':
+        #prefix = 'train' if is_train else 'val'
         if config.DATA.ZIP_MODE:
-            ann_file = prefix + "_map.txt"
+            #ann_file = prefix + "_map.txt"
+            ann_file = "_map.txt"
             prefix = prefix + ".zip@/"
             dataset = CachedImageFolder(config.DATA.DATA_PATH, ann_file, prefix, transform,
                                         cache_mode=config.DATA.CACHE_MODE if is_train else 'part')
         else:
             root = os.path.join(config.DATA.DATA_PATH, prefix)
             dataset = datasets.ImageFolder(root, transform=transform)
-        nb_classes = 1000
-    elif config.DATA.DATASET == 'imagenet22K':
-        prefix = 'ILSVRC2011fall_whole'
-        if is_train:
-            ann_file = prefix + "_map_train.txt"
-        else:
-            ann_file = prefix + "_map_val.txt"
-        dataset = IN22KDATASET(config.DATA.DATA_PATH, ann_file, transform)
-        nb_classes = 21841
+        nb_classes = 102
+        
     else:
-        raise NotImplementedError("We only support ImageNet Now.")
+        raise NotImplementedError("We only support 102Flowers Now.")
 
     return dataset, nb_classes
 
