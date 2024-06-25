@@ -98,7 +98,7 @@ def build_loader(config):
 def build_dataset(is_train, config):
     transform = build_transform(is_train, config)
     if config.DATA.DATASET == '102flowers':
-        #prefix = 'train' if is_train else 'val'
+        prefix = '' if is_train else ''
         if config.DATA.ZIP_MODE:
             #ann_file = prefix + "_map.txt"
             ann_file = "_map.txt"
@@ -106,7 +106,8 @@ def build_dataset(is_train, config):
             dataset = CachedImageFolder(config.DATA.DATA_PATH, ann_file, prefix, transform,
                                         cache_mode=config.DATA.CACHE_MODE if is_train else 'part')
         else:
-            root = os.path.join(config.DATA.DATA_PATH, prefix)
+            #root = os.path.join(config.DATA.DATA_PATH, prefix)
+            root = config.DATA.DATA_PATH
             dataset = datasets.ImageFolder(root, transform=transform)
         nb_classes = 102
         
