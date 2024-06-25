@@ -1,0 +1,666 @@
+/usr/local/lib/python3.10/dist-packages/torch/distributed/launch.py:183: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use-env is set by default in torchrun.
+If your script expects `--local-rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  warnings.warn(
+||fork||=> merge config from /content/VMamba/classification/configs/vssm/vmambav2v_tiny_224.yaml
+RANK and WORLD_SIZE in environ: 0/1
+/tmp/vssm1_tiny_0230s/20240625043450
+[2024-06-25 04:34:51 vssm1_tiny_0230s](main.py 429): INFO Full config saved to /tmp/vssm1_tiny_0230s/20240625043450/config.json
+[2024-06-25 04:34:51 vssm1_tiny_0230s](main.py 432): INFO AMP_ENABLE: true
+AMP_OPT_LEVEL: ''
+AUG:
+  AUTO_AUGMENT: rand-m9-mstd0.5-inc1
+  COLOR_JITTER: 0.4
+  CUTMIX: 1.0
+  CUTMIX_MINMAX: null
+  MIXUP: 0.8
+  MIXUP_MODE: batch
+  MIXUP_PROB: 1.0
+  MIXUP_SWITCH_PROB: 0.5
+  RECOUNT: 1
+  REMODE: pixel
+  REPROB: 0.25
+BASE:
+- ''
+DATA:
+  BATCH_SIZE: 8
+  CACHE_MODE: part
+  DATASET: imagenet
+  DATA_PATH: /content/drive/MyDrive/imagenet/
+  IMG_SIZE: 224
+  INTERPOLATION: bicubic
+  MASK_PATCH_SIZE: 32
+  MASK_RATIO: 0.6
+  NUM_WORKERS: 8
+  PIN_MEMORY: true
+  ZIP_MODE: false
+ENABLE_AMP: false
+EVAL_MODE: false
+FUSED_LAYERNORM: false
+MODEL:
+  DROP_PATH_RATE: 0.2
+  DROP_RATE: 0.0
+  LABEL_SMOOTHING: 0.1
+  MMCKPT: false
+  NAME: vssm1_tiny_0230s
+  NUM_CLASSES: 1000
+  PRETRAINED: /content/drive/MyDrive/vssm1_tiny_0230s_ckpt_epoch_264.pth
+  RESUME: ''
+  TYPE: vssm
+  VSSM:
+    DEPTHS:
+    - 2
+    - 2
+    - 8
+    - 2
+    DOWNSAMPLE: v3
+    EMBED_DIM: 96
+    GMLP: false
+    IN_CHANS: 3
+    MLP_ACT_LAYER: gelu
+    MLP_DROP_RATE: 0.0
+    MLP_RATIO: 4.0
+    NORM_LAYER: ln2d
+    PATCHEMBED: v2
+    PATCH_NORM: true
+    PATCH_SIZE: 4
+    POSEMBED: false
+    SSM_ACT_LAYER: silu
+    SSM_CONV: 3
+    SSM_CONV_BIAS: false
+    SSM_DROP_RATE: 0.0
+    SSM_DT_RANK: auto
+    SSM_D_STATE: 1
+    SSM_FORWARDTYPE: v05_noz
+    SSM_INIT: v0
+    SSM_RANK_RATIO: 2.0
+    SSM_RATIO: 1.0
+OUTPUT: /tmp/vssm1_tiny_0230s/20240625043450
+PRINT_FREQ: 10
+SAVE_FREQ: 1
+SEED: 0
+TAG: '20240625043450'
+TEST:
+  CROP: true
+  SEQUENTIAL: false
+  SHUFFLE: false
+THROUGHPUT_MODE: false
+TRAIN:
+  ACCUMULATION_STEPS: 1
+  AUTO_RESUME: true
+  BASE_LR: 7.8125e-06
+  CLIP_GRAD: 5.0
+  EPOCHS: 10
+  LAYER_DECAY: 1.0
+  LR_SCHEDULER:
+    DECAY_EPOCHS: 30
+    DECAY_RATE: 0.1
+    GAMMA: 0.1
+    MULTISTEPS: []
+    NAME: cosine
+    WARMUP_PREFIX: true
+  MIN_LR: 7.8125e-08
+  MOE:
+    SAVE_MASTER: false
+  OPTIMIZER:
+    BETAS:
+    - 0.9
+    - 0.999
+    EPS: 1.0e-08
+    MOMENTUM: 0.9
+    NAME: adamw
+  START_EPOCH: 0
+  USE_CHECKPOINT: false
+  WARMUP_EPOCHS: 5
+  WARMUP_LR: 7.8125e-09
+  WEIGHT_DECAY: 0.05
+TRAINCOST_MODE: false
+
+[2024-06-25 04:34:51 vssm1_tiny_0230s](main.py 433): INFO {"cfg": "/content/VMamba/classification/configs/vssm/vmambav2v_tiny_224.yaml", "opts": null, "batch_size": 8, "data_path": "/content/drive/MyDrive/imagenet/", "zip": false, "cache_mode": "part", "pretrained": "/content/drive/MyDrive/vssm1_tiny_0230s_ckpt_epoch_264.pth", "resume": null, "accumulation_steps": null, "use_checkpoint": false, "disable_amp": false, "output": "/tmp", "tag": "20240625043450", "eval": false, "throughput": false, "fused_layernorm": false, "optim": null, "model_ema": true, "model_ema_decay": 0.9999, "model_ema_force_cpu": false, "memory_limit_rate": -1}
+rank 0 successfully build train dataset
+rank 0 successfully build val dataset
+/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py:558: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+[2024-06-25 04:34:51 vssm1_tiny_0230s](main.py 109): INFO Creating model:vssm/vssm1_tiny_0230s
+[2024-06-25 04:34:52 vssm1_tiny_0230s](main.py 114): INFO VSSM(
+  (patch_embed): Sequential(
+    (0): Conv2d(3, 48, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (1): Identity()
+    (2): LayerNorm2d((48,), eps=1e-05, elementwise_affine=True)
+    (3): Identity()
+    (4): GELU(approximate='none')
+    (5): Conv2d(48, 96, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (6): Identity()
+    (7): LayerNorm2d((96,), eps=1e-05, elementwise_affine=True)
+  )
+  (layers): ModuleList(
+    (0): Sequential(
+      (blocks): Sequential(
+        (0): VSSBlock(
+          (norm): LayerNorm2d((96,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((96,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=96, out_features=96, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=96, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=96, out_features=96, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.0)
+          (norm2): LayerNorm2d((96,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=96, out_features=384, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=384, out_features=96, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (1): VSSBlock(
+          (norm): LayerNorm2d((96,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((96,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=96, out_features=96, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=96, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=96, out_features=96, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.015384615398943424)
+          (norm2): LayerNorm2d((96,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=96, out_features=384, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=384, out_features=96, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+      )
+      (downsample): Sequential(
+        (0): Identity()
+        (1): Conv2d(96, 192, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        (2): Identity()
+        (3): LayerNorm2d((192,), eps=1e-05, elementwise_affine=True)
+      )
+    )
+    (1): Sequential(
+      (blocks): Sequential(
+        (0): VSSBlock(
+          (norm): LayerNorm2d((192,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((192,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=192, out_features=192, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=192, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=192, out_features=192, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.03076923079788685)
+          (norm2): LayerNorm2d((192,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=192, out_features=768, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=768, out_features=192, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (1): VSSBlock(
+          (norm): LayerNorm2d((192,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((192,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=192, out_features=192, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=192, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=192, out_features=192, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.04615384712815285)
+          (norm2): LayerNorm2d((192,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=192, out_features=768, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=768, out_features=192, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+      )
+      (downsample): Sequential(
+        (0): Identity()
+        (1): Conv2d(192, 384, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        (2): Identity()
+        (3): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+      )
+    )
+    (2): Sequential(
+      (blocks): Sequential(
+        (0): VSSBlock(
+          (norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.0615384615957737)
+          (norm2): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=384, out_features=1536, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=1536, out_features=384, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (1): VSSBlock(
+          (norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.07692307978868484)
+          (norm2): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=384, out_features=1536, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=1536, out_features=384, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (2): VSSBlock(
+          (norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.0923076942563057)
+          (norm2): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=384, out_features=1536, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=1536, out_features=384, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (3): VSSBlock(
+          (norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.10769230872392654)
+          (norm2): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=384, out_features=1536, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=1536, out_features=384, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (4): VSSBlock(
+          (norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.1230769231915474)
+          (norm2): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=384, out_features=1536, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=1536, out_features=384, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (5): VSSBlock(
+          (norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.13846154510974884)
+          (norm2): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=384, out_features=1536, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=1536, out_features=384, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (6): VSSBlock(
+          (norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.1538461595773697)
+          (norm2): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=384, out_features=1536, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=1536, out_features=384, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (7): VSSBlock(
+          (norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(384, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=384, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=384, out_features=384, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.16923077404499054)
+          (norm2): LayerNorm2d((384,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=384, out_features=1536, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=1536, out_features=384, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+      )
+      (downsample): Sequential(
+        (0): Identity()
+        (1): Conv2d(384, 768, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        (2): Identity()
+        (3): LayerNorm2d((768,), eps=1e-05, elementwise_affine=True)
+      )
+    )
+    (3): Sequential(
+      (blocks): Sequential(
+        (0): VSSBlock(
+          (norm): LayerNorm2d((768,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((768,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=768, out_features=768, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(768, 768, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=768, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=768, out_features=768, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.1846153885126114)
+          (norm2): LayerNorm2d((768,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=768, out_features=3072, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=3072, out_features=768, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (1): VSSBlock(
+          (norm): LayerNorm2d((768,), eps=1e-05, elementwise_affine=True)
+          (op): SS2D(
+            (out_norm): LayerNorm2d((768,), eps=1e-05, elementwise_affine=True)
+            (in_proj): Linear2d(in_features=768, out_features=768, bias=False)
+            (act): SiLU()
+            (conv2d): Conv2d(768, 768, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=768, bias=False)
+            (out_act): Identity()
+            (out_proj): Linear2d(in_features=768, out_features=768, bias=False)
+            (dropout): Identity()
+          )
+          (drop_path): timm.DropPath(0.20000000298023224)
+          (norm2): LayerNorm2d((768,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear2d(in_features=768, out_features=3072, bias=True)
+            (act): GELU(approximate='none')
+            (fc2): Linear2d(in_features=3072, out_features=768, bias=True)
+            (drop): Dropout(p=0.0, inplace=False)
+          )
+        )
+      )
+      (downsample): Identity()
+    )
+  )
+  (classifier): Sequential(
+    (norm): LayerNorm2d((768,), eps=1e-05, elementwise_affine=True)
+    (permute): Identity()
+    (avgpool): AdaptiveAvgPool2d(output_size=1)
+    (flatten): Flatten(start_dim=1, end_dim=-1)
+    (head): Linear(in_features=768, out_features=1000, bias=True)
+  )
+)
+[2024-06-25 04:34:52 vssm1_tiny_0230s](main.py 116): INFO number of params: 30249064
+input params:  u.1 delta.1 A.1 B.1 C.1 D.1 delta_bias.1 
+input params:  u.3 delta.3 A.3 B.3 C.3 D.3 delta_bias.3 
+input params:  u.5 delta.5 A.5 B.5 C.5 D.5 delta_bias.5 
+input params:  u.7 delta.7 A.7 B.7 C.7 D.7 delta_bias.7 
+input params:  u.9 delta.9 A.9 B.9 C.9 D.9 delta_bias.9 
+input params:  u.11 delta.11 A.11 B.11 C.11 D.11 delta_bias.11 
+input params:  u.13 delta.13 A.13 B.13 C.13 D.13 delta_bias.13 
+input params:  u.15 delta.15 A.15 B.15 C.15 D.15 delta_bias.15 
+input params:  u.17 delta.17 A.17 B.17 C.17 D.17 delta_bias.17 
+input params:  u.19 delta.19 A.19 B.19 C.19 D.19 delta_bias.19 
+input params:  u.21 delta.21 A.21 B.21 C.21 D.21 delta_bias.21 
+input params:  u.23 delta.23 A.23 B.23 C.23 D.23 delta_bias.23 
+input params:  u.25 delta.25 A.25 B.25 C.25 D.25 delta_bias.25 
+input params:  u delta A B C D delta_bias 
+Unsupported operator aten::gelu encountered 15 time(s)
+Unsupported operator aten::mul encountered 28 time(s)
+Unsupported operator prim::PythonOp.CrossScanTritonF encountered 14 time(s)
+Unsupported operator prim::PythonOp.CrossMergeTritonF encountered 14 time(s)
+Unsupported operator aten::add encountered 28 time(s)
+The following submodules of the model were never called during the trace of the graph. They may be unused, or they were accessed by direct calls to .forward() or via other python methods. In the latter case they will have zeros for statistics, though their statistics will still contribute to their parent calling module.
+layers.0.blocks.0.drop_path, layers.0.blocks.1.drop_path, layers.1.blocks.0.drop_path, layers.1.blocks.1.drop_path, layers.2.blocks.0.drop_path, layers.2.blocks.1.drop_path, layers.2.blocks.2.drop_path, layers.2.blocks.3.drop_path, layers.2.blocks.4.drop_path, layers.2.blocks.5.drop_path, layers.2.blocks.6.drop_path, layers.2.blocks.7.drop_path, layers.3.blocks.0.drop_path, layers.3.blocks.1.drop_path
+[2024-06-25 04:34:55 vssm1_tiny_0230s](main.py 118): INFO number of GFLOPs: 4.905609984
+Using EMA with decay = 0.99990000
+[2024-06-25 04:34:55 vssm1_tiny_0230s](optimizer.py 18): INFO ==============> building optimizer adamw....................
+[2024-06-25 04:34:55 vssm1_tiny_0230s](optimizer.py 36): INFO No weight decay list: ['patch_embed.0.bias', 'patch_embed.2.weight', 'patch_embed.2.bias', 'patch_embed.5.bias', 'patch_embed.7.weight', 'patch_embed.7.bias', 'layers.0.blocks.0.norm.weight', 'layers.0.blocks.0.norm.bias', 'layers.0.blocks.0.op.Ds', 'layers.0.blocks.0.op.out_norm.weight', 'layers.0.blocks.0.op.out_norm.bias', 'layers.0.blocks.0.norm2.weight', 'layers.0.blocks.0.norm2.bias', 'layers.0.blocks.0.mlp.fc1.bias', 'layers.0.blocks.0.mlp.fc2.bias', 'layers.0.blocks.1.norm.weight', 'layers.0.blocks.1.norm.bias', 'layers.0.blocks.1.op.Ds', 'layers.0.blocks.1.op.out_norm.weight', 'layers.0.blocks.1.op.out_norm.bias', 'layers.0.blocks.1.norm2.weight', 'layers.0.blocks.1.norm2.bias', 'layers.0.blocks.1.mlp.fc1.bias', 'layers.0.blocks.1.mlp.fc2.bias', 'layers.0.downsample.1.bias', 'layers.0.downsample.3.weight', 'layers.0.downsample.3.bias', 'layers.1.blocks.0.norm.weight', 'layers.1.blocks.0.norm.bias', 'layers.1.blocks.0.op.Ds', 'layers.1.blocks.0.op.out_norm.weight', 'layers.1.blocks.0.op.out_norm.bias', 'layers.1.blocks.0.norm2.weight', 'layers.1.blocks.0.norm2.bias', 'layers.1.blocks.0.mlp.fc1.bias', 'layers.1.blocks.0.mlp.fc2.bias', 'layers.1.blocks.1.norm.weight', 'layers.1.blocks.1.norm.bias', 'layers.1.blocks.1.op.Ds', 'layers.1.blocks.1.op.out_norm.weight', 'layers.1.blocks.1.op.out_norm.bias', 'layers.1.blocks.1.norm2.weight', 'layers.1.blocks.1.norm2.bias', 'layers.1.blocks.1.mlp.fc1.bias', 'layers.1.blocks.1.mlp.fc2.bias', 'layers.1.downsample.1.bias', 'layers.1.downsample.3.weight', 'layers.1.downsample.3.bias', 'layers.2.blocks.0.norm.weight', 'layers.2.blocks.0.norm.bias', 'layers.2.blocks.0.op.Ds', 'layers.2.blocks.0.op.out_norm.weight', 'layers.2.blocks.0.op.out_norm.bias', 'layers.2.blocks.0.norm2.weight', 'layers.2.blocks.0.norm2.bias', 'layers.2.blocks.0.mlp.fc1.bias', 'layers.2.blocks.0.mlp.fc2.bias', 'layers.2.blocks.1.norm.weight', 'layers.2.blocks.1.norm.bias', 'layers.2.blocks.1.op.Ds', 'layers.2.blocks.1.op.out_norm.weight', 'layers.2.blocks.1.op.out_norm.bias', 'layers.2.blocks.1.norm2.weight', 'layers.2.blocks.1.norm2.bias', 'layers.2.blocks.1.mlp.fc1.bias', 'layers.2.blocks.1.mlp.fc2.bias', 'layers.2.blocks.2.norm.weight', 'layers.2.blocks.2.norm.bias', 'layers.2.blocks.2.op.Ds', 'layers.2.blocks.2.op.out_norm.weight', 'layers.2.blocks.2.op.out_norm.bias', 'layers.2.blocks.2.norm2.weight', 'layers.2.blocks.2.norm2.bias', 'layers.2.blocks.2.mlp.fc1.bias', 'layers.2.blocks.2.mlp.fc2.bias', 'layers.2.blocks.3.norm.weight', 'layers.2.blocks.3.norm.bias', 'layers.2.blocks.3.op.Ds', 'layers.2.blocks.3.op.out_norm.weight', 'layers.2.blocks.3.op.out_norm.bias', 'layers.2.blocks.3.norm2.weight', 'layers.2.blocks.3.norm2.bias', 'layers.2.blocks.3.mlp.fc1.bias', 'layers.2.blocks.3.mlp.fc2.bias', 'layers.2.blocks.4.norm.weight', 'layers.2.blocks.4.norm.bias', 'layers.2.blocks.4.op.Ds', 'layers.2.blocks.4.op.out_norm.weight', 'layers.2.blocks.4.op.out_norm.bias', 'layers.2.blocks.4.norm2.weight', 'layers.2.blocks.4.norm2.bias', 'layers.2.blocks.4.mlp.fc1.bias', 'layers.2.blocks.4.mlp.fc2.bias', 'layers.2.blocks.5.norm.weight', 'layers.2.blocks.5.norm.bias', 'layers.2.blocks.5.op.Ds', 'layers.2.blocks.5.op.out_norm.weight', 'layers.2.blocks.5.op.out_norm.bias', 'layers.2.blocks.5.norm2.weight', 'layers.2.blocks.5.norm2.bias', 'layers.2.blocks.5.mlp.fc1.bias', 'layers.2.blocks.5.mlp.fc2.bias', 'layers.2.blocks.6.norm.weight', 'layers.2.blocks.6.norm.bias', 'layers.2.blocks.6.op.Ds', 'layers.2.blocks.6.op.out_norm.weight', 'layers.2.blocks.6.op.out_norm.bias', 'layers.2.blocks.6.norm2.weight', 'layers.2.blocks.6.norm2.bias', 'layers.2.blocks.6.mlp.fc1.bias', 'layers.2.blocks.6.mlp.fc2.bias', 'layers.2.blocks.7.norm.weight', 'layers.2.blocks.7.norm.bias', 'layers.2.blocks.7.op.Ds', 'layers.2.blocks.7.op.out_norm.weight', 'layers.2.blocks.7.op.out_norm.bias', 'layers.2.blocks.7.norm2.weight', 'layers.2.blocks.7.norm2.bias', 'layers.2.blocks.7.mlp.fc1.bias', 'layers.2.blocks.7.mlp.fc2.bias', 'layers.2.downsample.1.bias', 'layers.2.downsample.3.weight', 'layers.2.downsample.3.bias', 'layers.3.blocks.0.norm.weight', 'layers.3.blocks.0.norm.bias', 'layers.3.blocks.0.op.Ds', 'layers.3.blocks.0.op.out_norm.weight', 'layers.3.blocks.0.op.out_norm.bias', 'layers.3.blocks.0.norm2.weight', 'layers.3.blocks.0.norm2.bias', 'layers.3.blocks.0.mlp.fc1.bias', 'layers.3.blocks.0.mlp.fc2.bias', 'layers.3.blocks.1.norm.weight', 'layers.3.blocks.1.norm.bias', 'layers.3.blocks.1.op.Ds', 'layers.3.blocks.1.op.out_norm.weight', 'layers.3.blocks.1.op.out_norm.bias', 'layers.3.blocks.1.norm2.weight', 'layers.3.blocks.1.norm2.bias', 'layers.3.blocks.1.mlp.fc1.bias', 'layers.3.blocks.1.mlp.fc2.bias', 'classifier.norm.weight', 'classifier.norm.bias', 'classifier.head.bias']
+All checkpoints founded in /tmp/vssm1_tiny_0230s/20240625043450: []
+[2024-06-25 04:34:55 vssm1_tiny_0230s](main.py 167): INFO no checkpoint found in /tmp/vssm1_tiny_0230s/20240625043450, ignoring auto resume
+[2024-06-25 04:34:55 vssm1_tiny_0230s](utils.py 60): INFO ==============> Loading weight /content/drive/MyDrive/vssm1_tiny_0230s_ckpt_epoch_264.pth for fine-tuning......
+[2024-06-25 04:34:56 vssm1_tiny_0230s](utils.py 65): WARNING <All keys matched successfully>
+[2024-06-25 04:34:56 vssm1_tiny_0230s](utils.py 66): INFO => loaded 'model' successfully from '/content/drive/MyDrive/vssm1_tiny_0230s_ckpt_epoch_264.pth'
+[2024-06-25 04:34:57 vssm1_tiny_0230s](utils.py 76): WARNING <All keys matched successfully>
+[2024-06-25 04:34:57 vssm1_tiny_0230s](utils.py 77): INFO => loaded 'model' successfully from '/content/drive/MyDrive/vssm1_tiny_0230s_ckpt_epoch_264.pth' for model_ema
+/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py:558: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+[2024-06-25 04:35:23 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 25.898 (25.898)	Loss 0.5513 (0.5513)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 6146MB
+[2024-06-25 04:35:28 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:35:28 vssm1_tiny_0230s](main.py 183): INFO Accuracy of the network on the 28 test images: 82.1%
+/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py:558: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+[2024-06-25 04:35:51 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 23.254 (23.254)	Loss 0.5513 (0.5513)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 6146MB
+[2024-06-25 04:35:55 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:35:55 vssm1_tiny_0230s](main.py 186): INFO Accuracy of the network ema on the 28 test images: 82.1%
+[2024-06-25 04:35:55 vssm1_tiny_0230s](main.py 201): INFO Start training
+/usr/local/lib/python3.10/dist-packages/torch/autograd/graph.py:744: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [768, 1, 3, 3], strides() = [9, 1, 3, 1]
+bucket_view.sizes() = [768, 1, 3, 3], strides() = [9, 9, 3, 1] (Triggered internally at ../torch/csrc/distributed/c10d/reducer.cpp:325.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[2024-06-25 04:36:25 vssm1_tiny_0230s](main.py 284): INFO Train: [0/10][0/33]	eta 0:16:36 lr 0.000000	 wd 0.0500	time 30.2018 (30.2018)	data time 27.2442 (27.2442)	model time 0.0000 (0.0000)	loss 2.8306 (2.8306)	grad_norm inf (inf)	loss_scale 32768.0000 (32768.0000)	mem 6761MB
+[2024-06-25 04:36:27 vssm1_tiny_0230s](main.py 284): INFO Train: [0/10][10/33]	eta 0:01:07 lr 0.000000	 wd 0.0500	time 0.1853 (2.9223)	data time 0.0013 (2.4781)	model time 0.0000 (0.0000)	loss 1.9404 (2.4359)	grad_norm 41.5632 (inf)	loss_scale 8192.0000 (11915.6364)	mem 1579MB
+[2024-06-25 04:36:28 vssm1_tiny_0230s](main.py 284): INFO Train: [0/10][20/33]	eta 0:00:21 lr 0.000001	 wd 0.0500	time 0.1500 (1.6163)	data time 0.0009 (1.2988)	model time 0.0000 (0.0000)	loss 2.7454 (2.4855)	grad_norm 32.8643 (inf)	loss_scale 8192.0000 (10142.4762)	mem 1579MB
+[2024-06-25 04:36:30 vssm1_tiny_0230s](main.py 284): INFO Train: [0/10][30/33]	eta 0:00:03 lr 0.000001	 wd 0.0500	time 0.1664 (1.1481)	data time 0.0007 (0.8801)	model time 0.0000 (0.0000)	loss 1.9857 (2.4964)	grad_norm 16.4410 (inf)	loss_scale 4096.0000 (8324.1290)	mem 1579MB
+[2024-06-25 04:36:34 vssm1_tiny_0230s](main.py 295): INFO EPOCH 0 training takes 0:00:39
+[2024-06-25 04:36:34 vssm1_tiny_0230s](utils.py 99): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_0.pth saving......
+[2024-06-25 04:36:37 vssm1_tiny_0230s](utils.py 101): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_0.pth saved !!!
+/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py:558: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+[2024-06-25 04:37:02 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 24.274 (24.274)	Loss 0.5210 (0.5210)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 1579MB
+[2024-06-25 04:37:06 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:37:06 vssm1_tiny_0230s](main.py 211): INFO Accuracy of the network on the 28 test images: 82.1%
+[2024-06-25 04:37:06 vssm1_tiny_0230s](main.py 213): INFO Max accuracy: 82.14%
+[2024-06-25 04:37:31 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 25.166 (25.166)	Loss 0.5513 (0.5513)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 1579MB
+[2024-06-25 04:37:35 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:37:35 vssm1_tiny_0230s](main.py 216): INFO Accuracy of the network on the 28 test images: 82.1%
+[2024-06-25 04:37:35 vssm1_tiny_0230s](main.py 218): INFO Max accuracy ema: 82.14%
+[2024-06-25 04:38:00 vssm1_tiny_0230s](main.py 284): INFO Train: [1/10][0/33]	eta 0:13:43 lr 0.000002	 wd 0.0500	time 24.9483 (24.9483)	data time 24.2241 (24.2241)	model time 0.0000 (0.0000)	loss 1.8855 (1.8855)	grad_norm 20.1458 (20.1458)	loss_scale 4096.0000 (4096.0000)	mem 1579MB
+[2024-06-25 04:38:02 vssm1_tiny_0230s](main.py 284): INFO Train: [1/10][10/33]	eta 0:00:56 lr 0.000002	 wd 0.0500	time 0.1555 (2.4408)	data time 0.0008 (2.2036)	model time 0.0000 (0.0000)	loss 2.8257 (2.3384)	grad_norm 37.7950 (30.5962)	loss_scale 4096.0000 (4096.0000)	mem 1579MB
+[2024-06-25 04:38:03 vssm1_tiny_0230s](main.py 284): INFO Train: [1/10][20/33]	eta 0:00:17 lr 0.000003	 wd 0.0500	time 0.1215 (1.3502)	data time 0.0005 (1.1547)	model time 0.0000 (0.0000)	loss 3.1519 (2.3076)	grad_norm 62.6405 (30.2475)	loss_scale 4096.0000 (4096.0000)	mem 1579MB
+[2024-06-25 04:38:05 vssm1_tiny_0230s](main.py 284): INFO Train: [1/10][30/33]	eta 0:00:02 lr 0.000003	 wd 0.0500	time 0.1218 (0.9545)	data time 0.0006 (0.7824)	model time 0.0000 (0.0000)	loss 1.9697 (2.2843)	grad_norm 30.6705 (29.3223)	loss_scale 4096.0000 (4096.0000)	mem 1579MB
+[2024-06-25 04:38:08 vssm1_tiny_0230s](main.py 295): INFO EPOCH 1 training takes 0:00:33
+[2024-06-25 04:38:08 vssm1_tiny_0230s](utils.py 99): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_1.pth saving......
+[2024-06-25 04:38:10 vssm1_tiny_0230s](utils.py 101): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_1.pth saved !!!
+[2024-06-25 04:38:34 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 24.151 (24.151)	Loss 0.4590 (0.4590)	Acc@1 87.500 (87.500)	Acc@5 100.000 (100.000)	Mem 1579MB
+[2024-06-25 04:38:38 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 100.000
+[2024-06-25 04:38:38 vssm1_tiny_0230s](main.py 211): INFO Accuracy of the network on the 28 test images: 82.1%
+[2024-06-25 04:38:38 vssm1_tiny_0230s](main.py 213): INFO Max accuracy: 82.14%
+[2024-06-25 04:39:01 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 23.540 (23.540)	Loss 0.5508 (0.5508)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 1579MB
+[2024-06-25 04:39:06 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:39:06 vssm1_tiny_0230s](main.py 216): INFO Accuracy of the network on the 28 test images: 82.1%
+[2024-06-25 04:39:06 vssm1_tiny_0230s](main.py 218): INFO Max accuracy ema: 82.14%
+[2024-06-25 04:39:32 vssm1_tiny_0230s](main.py 284): INFO Train: [2/10][0/33]	eta 0:14:47 lr 0.000003	 wd 0.0500	time 26.8904 (26.8904)	data time 26.3586 (26.3586)	model time 0.0000 (0.0000)	loss 1.9487 (1.9487)	grad_norm 16.2042 (16.2042)	loss_scale 4096.0000 (4096.0000)	mem 1579MB
+[2024-06-25 04:39:34 vssm1_tiny_0230s](main.py 284): INFO Train: [2/10][10/33]	eta 0:00:59 lr 0.000004	 wd 0.0500	time 0.1591 (2.5989)	data time 0.0012 (2.3975)	model time 0.0000 (0.0000)	loss 2.2794 (2.0308)	grad_norm 33.8259 (21.9060)	loss_scale 4096.0000 (4096.0000)	mem 1579MB
+[2024-06-25 04:39:36 vssm1_tiny_0230s](main.py 284): INFO Train: [2/10][20/33]	eta 0:00:18 lr 0.000004	 wd 0.0500	time 0.1224 (1.4322)	data time 0.0007 (1.2563)	model time 0.0000 (0.0000)	loss 1.4996 (2.0293)	grad_norm 4.0924 (25.1129)	loss_scale 4096.0000 (4096.0000)	mem 1579MB
+[2024-06-25 04:39:37 vssm1_tiny_0230s](main.py 284): INFO Train: [2/10][30/33]	eta 0:00:03 lr 0.000005	 wd 0.0500	time 0.1465 (1.0108)	data time 0.0006 (0.8512)	model time 0.0000 (0.0000)	loss 2.1232 (2.1025)	grad_norm 18.2687 (inf)	loss_scale 2048.0000 (3765.6774)	mem 1579MB
+[2024-06-25 04:39:42 vssm1_tiny_0230s](main.py 295): INFO EPOCH 2 training takes 0:00:36
+[2024-06-25 04:39:42 vssm1_tiny_0230s](utils.py 99): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_2.pth saving......
+[2024-06-25 04:39:46 vssm1_tiny_0230s](utils.py 101): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_2.pth saved !!!
+[2024-06-25 04:40:08 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 22.704 (22.704)	Loss 0.3804 (0.3804)	Acc@1 87.500 (87.500)	Acc@5 100.000 (100.000)	Mem 1579MB
+[2024-06-25 04:40:13 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 89.286 Acc@5 100.000
+[2024-06-25 04:40:13 vssm1_tiny_0230s](main.py 211): INFO Accuracy of the network on the 28 test images: 89.3%
+[2024-06-25 04:40:13 vssm1_tiny_0230s](main.py 213): INFO Max accuracy: 89.29%
+[2024-06-25 04:40:35 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 22.181 (22.181)	Loss 0.5513 (0.5513)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 1579MB
+[2024-06-25 04:40:41 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:40:41 vssm1_tiny_0230s](main.py 216): INFO Accuracy of the network on the 28 test images: 82.1%
+[2024-06-25 04:40:41 vssm1_tiny_0230s](main.py 218): INFO Max accuracy ema: 82.14%
+[2024-06-25 04:41:04 vssm1_tiny_0230s](main.py 284): INFO Train: [3/10][0/33]	eta 0:12:25 lr 0.000005	 wd 0.0500	time 22.6001 (22.6001)	data time 22.0940 (22.0940)	model time 0.0000 (0.0000)	loss 2.1518 (2.1518)	grad_norm 14.0183 (14.0183)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:41:06 vssm1_tiny_0230s](main.py 284): INFO Train: [3/10][10/33]	eta 0:00:51 lr 0.000005	 wd 0.0500	time 0.2271 (2.2472)	data time 0.0013 (2.0105)	model time 0.0000 (0.0000)	loss 2.1857 (2.2861)	grad_norm 21.5865 (46.6941)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:41:08 vssm1_tiny_0230s](main.py 284): INFO Train: [3/10][20/33]	eta 0:00:16 lr 0.000006	 wd 0.0500	time 0.1825 (1.2814)	data time 0.0006 (1.0544)	model time 0.0000 (0.0000)	loss 2.4323 (2.1830)	grad_norm 42.6845 (37.1093)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:41:10 vssm1_tiny_0230s](main.py 284): INFO Train: [3/10][30/33]	eta 0:00:02 lr 0.000006	 wd 0.0500	time 0.1210 (0.9224)	data time 0.0005 (0.7146)	model time 0.0000 (0.0000)	loss 1.8768 (2.1636)	grad_norm 20.6416 (32.7162)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:41:13 vssm1_tiny_0230s](main.py 295): INFO EPOCH 3 training takes 0:00:32
+[2024-06-25 04:41:13 vssm1_tiny_0230s](utils.py 99): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_3.pth saving......
+[2024-06-25 04:41:15 vssm1_tiny_0230s](utils.py 101): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_3.pth saved !!!
+[2024-06-25 04:41:38 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 23.267 (23.267)	Loss 0.2617 (0.2617)	Acc@1 100.000 (100.000)	Acc@5 100.000 (100.000)	Mem 1579MB
+[2024-06-25 04:41:42 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 92.857 Acc@5 100.000
+[2024-06-25 04:41:42 vssm1_tiny_0230s](main.py 211): INFO Accuracy of the network on the 28 test images: 92.9%
+[2024-06-25 04:41:42 vssm1_tiny_0230s](main.py 213): INFO Max accuracy: 92.86%
+[2024-06-25 04:42:05 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 22.290 (22.290)	Loss 0.5498 (0.5498)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 1579MB
+[2024-06-25 04:42:10 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:42:10 vssm1_tiny_0230s](main.py 216): INFO Accuracy of the network on the 28 test images: 82.1%
+[2024-06-25 04:42:10 vssm1_tiny_0230s](main.py 218): INFO Max accuracy ema: 82.14%
+[2024-06-25 04:42:34 vssm1_tiny_0230s](main.py 284): INFO Train: [4/10][0/33]	eta 0:13:35 lr 0.000006	 wd 0.0500	time 24.6999 (24.6999)	data time 24.1242 (24.1242)	model time 0.0000 (0.0000)	loss 2.0812 (2.0812)	grad_norm 22.8590 (22.8590)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:42:37 vssm1_tiny_0230s](main.py 284): INFO Train: [4/10][10/33]	eta 0:00:56 lr 0.000007	 wd 0.0500	time 0.2565 (2.4563)	data time 0.0115 (2.1978)	model time 0.0000 (0.0000)	loss 2.7887 (2.1597)	grad_norm 26.4570 (27.3648)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:42:39 vssm1_tiny_0230s](main.py 284): INFO Train: [4/10][20/33]	eta 0:00:18 lr 0.000007	 wd 0.0500	time 0.1703 (1.3915)	data time 0.0008 (1.1527)	model time 0.0000 (0.0000)	loss 1.9665 (2.0895)	grad_norm 24.9669 (24.1592)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:42:40 vssm1_tiny_0230s](main.py 284): INFO Train: [4/10][30/33]	eta 0:00:02 lr 0.000008	 wd 0.0500	time 0.1240 (0.9880)	data time 0.0005 (0.7811)	model time 0.0000 (0.0000)	loss 1.5532 (2.0786)	grad_norm 15.1183 (25.0582)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:42:44 vssm1_tiny_0230s](main.py 295): INFO EPOCH 4 training takes 0:00:34
+[2024-06-25 04:42:44 vssm1_tiny_0230s](utils.py 99): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_4.pth saving......
+[2024-06-25 04:42:46 vssm1_tiny_0230s](utils.py 101): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_4.pth saved !!!
+[2024-06-25 04:43:10 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 23.910 (23.910)	Loss 0.1857 (0.1857)	Acc@1 100.000 (100.000)	Acc@5 100.000 (100.000)	Mem 1579MB
+[2024-06-25 04:43:14 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 92.857 Acc@5 100.000
+[2024-06-25 04:43:14 vssm1_tiny_0230s](main.py 211): INFO Accuracy of the network on the 28 test images: 92.9%
+[2024-06-25 04:43:14 vssm1_tiny_0230s](main.py 213): INFO Max accuracy: 92.86%
+[2024-06-25 04:43:37 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 23.384 (23.384)	Loss 0.5498 (0.5498)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 1579MB
+[2024-06-25 04:43:42 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:43:42 vssm1_tiny_0230s](main.py 216): INFO Accuracy of the network on the 28 test images: 82.1%
+[2024-06-25 04:43:42 vssm1_tiny_0230s](main.py 218): INFO Max accuracy ema: 82.14%
+[2024-06-25 04:44:05 vssm1_tiny_0230s](main.py 284): INFO Train: [5/10][0/33]	eta 0:13:08 lr 0.000008	 wd 0.0500	time 23.9007 (23.9007)	data time 22.7246 (22.7246)	model time 0.0000 (0.0000)	loss 2.2282 (2.2282)	grad_norm 27.9900 (27.9900)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:44:08 vssm1_tiny_0230s](main.py 284): INFO Train: [5/10][10/33]	eta 0:00:55 lr 0.000008	 wd 0.0500	time 0.1658 (2.3925)	data time 0.0010 (2.0691)	model time 0.0000 (0.0000)	loss 2.1219 (2.0896)	grad_norm 34.1457 (24.7681)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:44:09 vssm1_tiny_0230s](main.py 284): INFO Train: [5/10][20/33]	eta 0:00:17 lr 0.000008	 wd 0.0500	time 0.1298 (1.3257)	data time 0.0007 (1.0843)	model time 0.0000 (0.0000)	loss 1.5019 (2.0519)	grad_norm 4.9417 (23.2831)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:44:11 vssm1_tiny_0230s](main.py 284): INFO Train: [5/10][30/33]	eta 0:00:02 lr 0.000007	 wd 0.0500	time 0.1236 (0.9380)	data time 0.0005 (0.7348)	model time 0.0000 (0.0000)	loss 1.8642 (2.0156)	grad_norm 43.1387 (23.7962)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:44:14 vssm1_tiny_0230s](main.py 295): INFO EPOCH 5 training takes 0:00:32
+[2024-06-25 04:44:14 vssm1_tiny_0230s](utils.py 99): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_5.pth saving......
+[2024-06-25 04:44:16 vssm1_tiny_0230s](utils.py 101): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_5.pth saved !!!
+[2024-06-25 04:44:40 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 23.612 (23.612)	Loss 0.1360 (0.1360)	Acc@1 100.000 (100.000)	Acc@5 100.000 (100.000)	Mem 1579MB
+[2024-06-25 04:44:44 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 92.857 Acc@5 100.000
+[2024-06-25 04:44:44 vssm1_tiny_0230s](main.py 211): INFO Accuracy of the network on the 28 test images: 92.9%
+[2024-06-25 04:44:44 vssm1_tiny_0230s](main.py 213): INFO Max accuracy: 92.86%
+[2024-06-25 04:45:08 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 23.793 (23.793)	Loss 0.5483 (0.5483)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 1579MB
+[2024-06-25 04:45:12 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:45:12 vssm1_tiny_0230s](main.py 216): INFO Accuracy of the network on the 28 test images: 82.1%
+[2024-06-25 04:45:12 vssm1_tiny_0230s](main.py 218): INFO Max accuracy ema: 82.14%
+[2024-06-25 04:45:38 vssm1_tiny_0230s](main.py 284): INFO Train: [6/10][0/33]	eta 0:14:36 lr 0.000007	 wd 0.0500	time 26.5478 (26.5478)	data time 26.0857 (26.0857)	model time 0.0000 (0.0000)	loss 1.4945 (1.4945)	grad_norm 33.1879 (33.1879)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:45:40 vssm1_tiny_0230s](main.py 284): INFO Train: [6/10][10/33]	eta 0:00:59 lr 0.000007	 wd 0.0500	time 0.1577 (2.5791)	data time 0.0010 (2.3736)	model time 0.0000 (0.0000)	loss 2.2716 (1.9326)	grad_norm 48.5859 (29.4072)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:45:41 vssm1_tiny_0230s](main.py 284): INFO Train: [6/10][20/33]	eta 0:00:18 lr 0.000006	 wd 0.0500	time 0.1339 (1.4221)	data time 0.0007 (1.2439)	model time 0.0000 (0.0000)	loss 1.7651 (1.8814)	grad_norm 17.5740 (24.9151)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:45:43 vssm1_tiny_0230s](main.py 284): INFO Train: [6/10][30/33]	eta 0:00:03 lr 0.000005	 wd 0.0500	time 0.1235 (1.0042)	data time 0.0005 (0.8429)	model time 0.0000 (0.0000)	loss 1.5852 (1.8751)	grad_norm 25.3410 (23.2512)	loss_scale 2048.0000 (2048.0000)	mem 1579MB
+[2024-06-25 04:45:47 vssm1_tiny_0230s](main.py 295): INFO EPOCH 6 training takes 0:00:35
+[2024-06-25 04:45:47 vssm1_tiny_0230s](utils.py 99): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_6.pth saving......
+[2024-06-25 04:45:49 vssm1_tiny_0230s](utils.py 101): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_6.pth saved !!!
+[2024-06-25 04:46:11 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 22.145 (22.145)	Loss 0.1338 (0.1338)	Acc@1 100.000 (100.000)	Acc@5 100.000 (100.000)	Mem 1579MB
+[2024-06-25 04:46:16 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 92.857 Acc@5 100.000
+[2024-06-25 04:46:16 vssm1_tiny_0230s](main.py 211): INFO Accuracy of the network on the 28 test images: 92.9%
+[2024-06-25 04:46:16 vssm1_tiny_0230s](main.py 213): INFO Max accuracy: 92.86%
+[2024-06-25 04:46:39 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 23.369 (23.369)	Loss 0.5459 (0.5459)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 1579MB
+[2024-06-25 04:46:43 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:46:43 vssm1_tiny_0230s](main.py 216): INFO Accuracy of the network on the 28 test images: 82.1%
+[2024-06-25 04:46:43 vssm1_tiny_0230s](main.py 218): INFO Max accuracy ema: 82.14%
+[2024-06-25 04:47:07 vssm1_tiny_0230s](main.py 284): INFO Train: [7/10][0/33]	eta 0:13:28 lr 0.000005	 wd 0.0500	time 24.5075 (24.5075)	data time 24.2567 (24.2567)	model time 0.0000 (0.0000)	loss 2.0743 (2.0743)	grad_norm 21.4921 (21.4921)	loss_scale 2048.0000 (2048.0000)	mem 1556MB
+[2024-06-25 04:47:09 vssm1_tiny_0230s](main.py 284): INFO Train: [7/10][10/33]	eta 0:00:54 lr 0.000004	 wd 0.0500	time 0.1575 (2.3808)	data time 0.0010 (2.2065)	model time 0.0000 (0.0000)	loss 1.7814 (2.0582)	grad_norm 16.2266 (27.3362)	loss_scale 2048.0000 (2048.0000)	mem 1556MB
+[2024-06-25 04:47:10 vssm1_tiny_0230s](main.py 284): INFO Train: [7/10][20/33]	eta 0:00:17 lr 0.000004	 wd 0.0500	time 0.1240 (1.3179)	data time 0.0005 (1.1566)	model time 0.0000 (0.0000)	loss 2.1794 (1.9036)	grad_norm 20.2202 (21.1040)	loss_scale 2048.0000 (2048.0000)	mem 1556MB
+[2024-06-25 04:47:12 vssm1_tiny_0230s](main.py 284): INFO Train: [7/10][30/33]	eta 0:00:02 lr 0.000003	 wd 0.0500	time 0.1309 (0.9331)	data time 0.0007 (0.7837)	model time 0.0000 (0.0000)	loss 2.1453 (1.8759)	grad_norm 15.6083 (22.0857)	loss_scale 2048.0000 (2048.0000)	mem 1556MB
+[2024-06-25 04:47:17 vssm1_tiny_0230s](main.py 295): INFO EPOCH 7 training takes 0:00:34
+[2024-06-25 04:47:17 vssm1_tiny_0230s](utils.py 99): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_7.pth saving......
+[2024-06-25 04:47:20 vssm1_tiny_0230s](utils.py 101): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_7.pth saved !!!
+[2024-06-25 04:47:43 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 22.187 (22.187)	Loss 0.1302 (0.1302)	Acc@1 100.000 (100.000)	Acc@5 100.000 (100.000)	Mem 1556MB
+[2024-06-25 04:47:48 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 96.429 Acc@5 100.000
+[2024-06-25 04:47:48 vssm1_tiny_0230s](main.py 211): INFO Accuracy of the network on the 28 test images: 96.4%
+[2024-06-25 04:47:48 vssm1_tiny_0230s](main.py 213): INFO Max accuracy: 96.43%
+[2024-06-25 04:48:10 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 22.025 (22.025)	Loss 0.5430 (0.5430)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 1556MB
+[2024-06-25 04:48:15 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:48:15 vssm1_tiny_0230s](main.py 216): INFO Accuracy of the network on the 28 test images: 82.1%
+[2024-06-25 04:48:15 vssm1_tiny_0230s](main.py 218): INFO Max accuracy ema: 82.14%
+[2024-06-25 04:48:40 vssm1_tiny_0230s](main.py 284): INFO Train: [8/10][0/33]	eta 0:13:41 lr 0.000003	 wd 0.0500	time 24.8982 (24.8982)	data time 24.3281 (24.3281)	model time 0.0000 (0.0000)	loss 2.2498 (2.2498)	grad_norm 37.7607 (37.7607)	loss_scale 2048.0000 (2048.0000)	mem 1556MB
+[2024-06-25 04:48:43 vssm1_tiny_0230s](main.py 284): INFO Train: [8/10][10/33]	eta 0:00:57 lr 0.000002	 wd 0.0500	time 0.2520 (2.5154)	data time 0.0012 (2.2140)	model time 0.0000 (0.0000)	loss 1.9474 (2.0728)	grad_norm 32.7506 (37.5808)	loss_scale 2048.0000 (2048.0000)	mem 1556MB
+[2024-06-25 04:48:45 vssm1_tiny_0230s](main.py 284): INFO Train: [8/10][20/33]	eta 0:00:18 lr 0.000001	 wd 0.0500	time 0.1234 (1.4170)	data time 0.0007 (1.1605)	model time 0.0000 (0.0000)	loss 2.3229 (1.9698)	grad_norm 32.9400 (30.8540)	loss_scale 2048.0000 (2048.0000)	mem 1556MB
+[2024-06-25 04:48:46 vssm1_tiny_0230s](main.py 284): INFO Train: [8/10][30/33]	eta 0:00:03 lr 0.000001	 wd 0.0500	time 0.1228 (1.0002)	data time 0.0007 (0.7863)	model time 0.0000 (0.0000)	loss 2.4869 (1.9320)	grad_norm 31.8467 (28.5098)	loss_scale 2048.0000 (2048.0000)	mem 1556MB
+[2024-06-25 04:48:50 vssm1_tiny_0230s](main.py 295): INFO EPOCH 8 training takes 0:00:34
+[2024-06-25 04:48:50 vssm1_tiny_0230s](utils.py 99): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_8.pth saving......
+[2024-06-25 04:48:52 vssm1_tiny_0230s](utils.py 101): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_8.pth saved !!!
+[2024-06-25 04:49:16 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 23.878 (23.878)	Loss 0.1302 (0.1302)	Acc@1 100.000 (100.000)	Acc@5 100.000 (100.000)	Mem 1556MB
+[2024-06-25 04:49:19 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 96.429 Acc@5 100.000
+[2024-06-25 04:49:19 vssm1_tiny_0230s](main.py 211): INFO Accuracy of the network on the 28 test images: 96.4%
+[2024-06-25 04:49:19 vssm1_tiny_0230s](main.py 213): INFO Max accuracy: 96.43%
+[2024-06-25 04:49:43 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 23.946 (23.946)	Loss 0.5405 (0.5405)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 1556MB
+[2024-06-25 04:49:47 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:49:47 vssm1_tiny_0230s](main.py 216): INFO Accuracy of the network on the 28 test images: 82.1%
+[2024-06-25 04:49:47 vssm1_tiny_0230s](main.py 218): INFO Max accuracy ema: 82.14%
+[2024-06-25 04:50:11 vssm1_tiny_0230s](main.py 284): INFO Train: [9/10][0/33]	eta 0:13:06 lr 0.000001	 wd 0.0500	time 23.8353 (23.8353)	data time 22.8702 (22.8702)	model time 0.0000 (0.0000)	loss 1.8586 (1.8586)	grad_norm 14.9102 (14.9102)	loss_scale 2048.0000 (2048.0000)	mem 1556MB
+[2024-06-25 04:50:13 vssm1_tiny_0230s](main.py 284): INFO Train: [9/10][10/33]	eta 0:00:54 lr 0.000000	 wd 0.0500	time 0.1595 (2.3676)	data time 0.0010 (2.0833)	model time 0.0000 (0.0000)	loss 1.6710 (1.8816)	grad_norm 18.5482 (18.0688)	loss_scale 2048.0000 (2048.0000)	mem 1556MB
+[2024-06-25 04:50:15 vssm1_tiny_0230s](main.py 284): INFO Train: [9/10][20/33]	eta 0:00:17 lr 0.000000	 wd 0.0500	time 0.1223 (1.3107)	data time 0.0007 (1.0918)	model time 0.0000 (0.0000)	loss 1.8358 (1.9939)	grad_norm 18.6909 (23.9660)	loss_scale 2048.0000 (2048.0000)	mem 1556MB
+[2024-06-25 04:50:16 vssm1_tiny_0230s](main.py 284): INFO Train: [9/10][30/33]	eta 0:00:02 lr 0.000000	 wd 0.0500	time 0.1234 (0.9282)	data time 0.0005 (0.7398)	model time 0.0000 (0.0000)	loss 1.7107 (2.0549)	grad_norm 9.3710 (26.4790)	loss_scale 2048.0000 (2048.0000)	mem 1556MB
+[2024-06-25 04:50:20 vssm1_tiny_0230s](main.py 295): INFO EPOCH 9 training takes 0:00:32
+[2024-06-25 04:50:20 vssm1_tiny_0230s](utils.py 99): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_9.pth saving......
+[2024-06-25 04:50:23 vssm1_tiny_0230s](utils.py 101): INFO /tmp/vssm1_tiny_0230s/20240625043450/ckpt_epoch_9.pth saved !!!
+[2024-06-25 04:50:46 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 23.302 (23.302)	Loss 0.1304 (0.1304)	Acc@1 100.000 (100.000)	Acc@5 100.000 (100.000)	Mem 1556MB
+[2024-06-25 04:50:50 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 96.429 Acc@5 100.000
+[2024-06-25 04:50:50 vssm1_tiny_0230s](main.py 211): INFO Accuracy of the network on the 28 test images: 96.4%
+[2024-06-25 04:50:50 vssm1_tiny_0230s](main.py 213): INFO Max accuracy: 96.43%
+[2024-06-25 04:51:14 vssm1_tiny_0230s](main.py 335): INFO Test: [0/4]	Time 23.707 (23.707)	Loss 0.5386 (0.5386)	Acc@1 87.500 (87.500)	Acc@5 87.500 (87.500)	Mem 1556MB
+[2024-06-25 04:51:17 vssm1_tiny_0230s](main.py 342): INFO  * Acc@1 82.143 Acc@5 96.429
+[2024-06-25 04:51:17 vssm1_tiny_0230s](main.py 216): INFO Accuracy of the network on the 28 test images: 82.1%
+[2024-06-25 04:51:17 vssm1_tiny_0230s](main.py 218): INFO Max accuracy ema: 82.14%
+[2024-06-25 04:51:17 vssm1_tiny_0230s](main.py 223): INFO Training time 0:15:22
